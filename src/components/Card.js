@@ -1,56 +1,29 @@
-import React, { useContext, useEffect, useState } from "react";
-import Angular from "../assets/angular.png";
-import AWS from "../assets/aws.png";
-import Docker from "../assets/docker.png";
-import GraphQl from "../assets/graphql.png";
-import Node from "../assets/node.png";
-import Python from "../assets/python.png";
-import Raspberry from "../assets/raspberry.png";
-import ReactPng from "../assets/react.png";
+import React, { useContext} from "react";
 import { CardContextProvider } from "../context/CardContext";
-import { matrix } from "../utils/matrix";
-const imageMap = {
-  1: Angular,
-  2: AWS,
-  3: Docker,
-  4: GraphQl,
-  5: Node,
-  6: Python,
-  7: Raspberry,
-  8: ReactPng,
-  9: Angular,
-  10: AWS,
-  11: Docker,
-  12: GraphQl,
-  13: Node,
-  14: Python,
-  15: Raspberry,
-  16: ReactPng,
-};
 
-const Card = ({ random, index, rowPos, colPos }) => {
-  const { flipCardCount, setFlipCardCount, foundCard, setFoundCard } =
-    useContext(CardContextProvider);
-  const [showCard, setShowCard] = useState(false);
-  console.log(random)
-  const cardIndex = index[0] * 4 + index[1] + 1;
+const Card = ({rowPos, colPos }) => {
+
+  const handleClick = () =>{
+    if(!gameOver){
+        const updatedMatrix = [...realMatrix];
+        updatedMatrix[rowPos][colPos].show = true;
+        setRealMatrix(updatedMatrix);      
+        setFlipCardCount(prev => prev+1);
+        setFoundCard((prev) => [...prev, realMatrix[rowPos][colPos].img]);
+        setGetRowCol(prev=>[...prev,rowPos,colPos])
+      }
+    }
+
+  const {realMatrix, setRealMatrix, setFlipCardCount,  setFoundCard, setGetRowCol, gameOver} = useContext(CardContextProvider);
   return (
     <div
-      className="w-36 h-36 bg-[#74b98b] rounded-3xl flex justify-center items-center hover:scale-110 duration-200"
-      onClick={() => {
-        console.log("row", rowPos);
-        console.log("col", colPos);
-        setShowCard((prev) => !prev);
-        setFlipCardCount((prev) => prev + 1);
-        // setFoundCard((prev) => [...prev, imageMap[random[cardIndex - 1]]]);
-        // console.log("found card", foundCard);
-        // console.log("card clicked", imageMap[random[cardIndex - 1]]);
-      }}
+      className="sm:w-36 sm:h-36 h-20 w-20 bg-[#76d395] rounded-lg sm:rounded-3xl flex justify-center items-center hover:scale-110 duration-200"
+      onClick={handleClick}
     >
       <img
-        src={imageMap[random[cardIndex - 1]]}
+        src={realMatrix[rowPos][colPos].img}
         alt=""
-        className={`w-20 h-20  ${showCard ? "block" : "hidden"}`}
+        className={`sm:w-20 sm:h-20 h-14 w-14  ${realMatrix[rowPos][colPos].show ? "block" : "hidden"}`}
       ></img>
     </div>
   );

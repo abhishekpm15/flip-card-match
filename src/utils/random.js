@@ -1,7 +1,6 @@
-
 let array = [];
 for (let i = 1; i <= 16; i++) {
-    array.push(i);
+  array.push(i);
 }
 
 export const randomAssign = () => {
@@ -15,6 +14,5 @@ export const randomAssign = () => {
       array[currentIndex],
     ];
   }
-  return array
+  return array;
 };
-

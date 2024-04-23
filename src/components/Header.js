@@ -1,9 +1,25 @@
-import React from 'react'
+import React, { useContext } from "react";
+import Heart from "./Heart";
+import { CardContextProvider } from "../context/CardContext";
 
 const Header = () => {
-  return (
-    <div className='text-3xl font-semibold'>FLIP MATCH</div>
-  )
-}
+  const { gameOver } = useContext(CardContextProvider);
 
-export default Header
+  return (
+    <div className="text-4xl font-semibold">
+      FLIP MATCH
+      <div className="flex items-center mt-4 h-12">
+        <div>
+          <Heart />
+        </div>
+        {gameOver && (
+          <div className="bg-red-500 p-2 rounded-xl text-2xl text-white">
+            Game over !
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Header;

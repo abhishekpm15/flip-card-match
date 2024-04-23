@@ -5,9 +5,9 @@ import App from "./App";
 import CardContext from "./context/CardContext";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <CardContext>
       <App />
     </CardContext>
-  </React.StrictMode>
+  // {/* </React.StrictMode> */}
 );

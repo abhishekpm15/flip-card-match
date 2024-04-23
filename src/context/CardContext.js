@@ -1,21 +1,69 @@
-import React, { createContext, useState } from "react";
-
+import React, { createContext, useEffect, useState } from "react";
+import { matrix } from "../utils/matrix";
 const CardContextProvider = createContext();
 
 const CardContext = ({ children }) => {
+  const [realMatrix, setRealMatrix] = useState(matrix);
+  console.log(realMatrix);
   const [flipCardCount, setFlipCardCount] = useState(0);
-  const [foundCard, setFoundCard] = useState([])
+  const [foundCard, setFoundCard] = useState([]);
+  const [getRowCol, setGetRowCol] = useState([]);
+  const [numberoftries, setNumberoftries] = useState(0)
+  const [life, setLife] = useState(5);
+  const [gameOver, setGameOver] = useState(false)
+
+  useEffect(() => {
+    if(life === numberoftries){
+        setGameOver(true)
+    }
+    if (flipCardCount === 2 && !gameOver) {
+      if (foundCard[0] === foundCard[1]) {
+        const updatedMatrix = [...realMatrix];
+        console.log("get row col", getRowCol[0], getRowCol[1]);
+        console.log("get row col", getRowCol[2], getRowCol[3]);
+        updatedMatrix[getRowCol[0]][getRowCol[1]].show = true;
+        updatedMatrix[getRowCol[2]][getRowCol[3]].show = true;
+        setRealMatrix(updatedMatrix);
+        setFoundCard([]);
+        setFlipCardCount(0);
+        setGetRowCol([]);
+      } else {
+        setTimeout(() => {
+          setNumberoftries(prev => prev+1)
+          const updatedMatrix = [...realMatrix];
+          updatedMatrix[getRowCol[0]][getRowCol[1]].show = false;
+          updatedMatrix[getRowCol[2]][getRowCol[3]].show = false;
+          setRealMatrix(updatedMatrix);
+          setFoundCard([]);
+          setFlipCardCount(0);
+          setGetRowCol([]);
+        },200);
+      }
+    }
+  }, [flipCardCount, foundCard, gameOver, getRowCol, life, numberoftries, realMatrix]);
+
   const values = {
     flipCardCount,
     setFlipCardCount,
     foundCard,
-    setFoundCard
-  }
+    setFoundCard,
+    realMatrix,
+    setRealMatrix,
+    getRowCol,
+    setGetRowCol,
+    numberoftries,
+    setNumberoftries,
+    life,
+    setLife,
+    gameOver
+  };
 
   return (
-    <CardContextProvider.Provider value={values}>{children}</CardContextProvider.Provider>
+    <CardContextProvider.Provider value={values}>
+      {children}
+    </CardContextProvider.Provider>
   );
 };
 
 export default CardContext;
-export {CardContextProvider}
+export { CardContextProvider };

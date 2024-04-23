@@ -7,7 +7,7 @@ import { CardContextProvider } from "./context/CardContext";
 import { matrix } from "./utils/matrix";
 function App() {
   const [random, setRandom] = useState([]);
-  const { flipCardCount, setFlipCardCount, foundCard, setFoundCard } =
+  const { flipCardCount, setFlipCardCount, foundCard, setFoundCard ,setRealMatrix} =
     useContext(CardContextProvider);
   let index = [];
 
@@ -23,10 +23,14 @@ function App() {
   useEffect(() => {
     const res = randomAssign();
     setRandom(res);
-  }, []);
+    setTimeout(()=>{
+      const updateMatrix = matrix.map((row) => row.map(item => ({...item, show: false})))
+      setRealMatrix(updateMatrix)
+  },4000)
+  }, [setRealMatrix]);
 
   return (
-    <div className="App flex flex-col items-center justify-center h-screen space-y-10">
+    <div className="App flex flex-col items-center justify-start sm:justify-center sm:mt-0 mt-24 h-screen space-y-10">
       <Header />
       <Rows random={random} index={index} />
     </div>
