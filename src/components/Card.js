@@ -17,7 +17,7 @@ const Card = ({rowPos, colPos }) => {
   const {realMatrix, setRealMatrix, setFlipCardCount,  setFoundCard, setGetRowCol, gameOver, win} = useContext(CardContextProvider);
   return (
     <div
-      className="sm:w-36 sm:h-36 h-20 w-20 bg-[#76d395] rounded-lg sm:rounded-3xl flex justify-center items-center hover:scale-110 duration-200"
+      className="sm:w-32 sm:h-32 h-20 w-20 bg-[#76d395] rounded-lg sm:rounded-3xl flex justify-center items-center hover:scale-110 duration-200"
       onClick={handleClick}
     >
       <img
