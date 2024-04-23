@@ -4,7 +4,7 @@ import { CardContextProvider } from "../context/CardContext";
 const Card = ({rowPos, colPos }) => {
 
   const handleClick = () =>{
-    if(!gameOver){
+    if(!gameOver && !win && realMatrix[rowPos][colPos].show === false){
         const updatedMatrix = [...realMatrix];
         updatedMatrix[rowPos][colPos].show = true;
         setRealMatrix(updatedMatrix);      
@@ -14,7 +14,7 @@ const Card = ({rowPos, colPos }) => {
       }
     }
 
-  const {realMatrix, setRealMatrix, setFlipCardCount,  setFoundCard, setGetRowCol, gameOver} = useContext(CardContextProvider);
+  const {realMatrix, setRealMatrix, setFlipCardCount,  setFoundCard, setGetRowCol, gameOver, win} = useContext(CardContextProvider);
   return (
     <div
       className="sm:w-36 sm:h-36 h-20 w-20 bg-[#76d395] rounded-lg sm:rounded-3xl flex justify-center items-center hover:scale-110 duration-200"

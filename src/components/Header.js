@@ -3,7 +3,7 @@ import Heart from "./Heart";
 import { CardContextProvider } from "../context/CardContext";
 
 const Header = () => {
-  const { gameOver } = useContext(CardContextProvider);
+  const { gameOver , win} = useContext(CardContextProvider);
 
   return (
     <div className="text-4xl font-semibold">
@@ -16,7 +16,12 @@ const Header = () => {
           <div className="bg-red-500 p-2 rounded-xl text-2xl text-white">
             Game over !
           </div>
-        )}
+        )}{
+            win && (
+                <div className="bg-green-500 p-2 rounded-xl text-2xl text-white">
+                  You Won !
+                </div>
+            )}
       </div>
     </div>
   );
